@@ -17,16 +17,17 @@ qtConfig(thread):!android|android_app {
     qtConfig(qml-profiler): SUBDIRS += qmlprofiler
     qtConfig(qml-preview): SUBDIRS += qmlpreview
 
+    qtConfig(regularexpression):qtConfig(process) {
+        SUBDIRS += \
+            qmlplugindump
+    }
+
     qtHaveModule(quick) {
         !static: {
             SUBDIRS += \
                 qmlscene \
                 qmltime
 
-            qtConfig(regularexpression):qtConfig(process) {
-                SUBDIRS += \
-                    qmlplugindump
-            }
         }
         qtHaveModule(widgets): SUBDIRS += qmleasing
     }

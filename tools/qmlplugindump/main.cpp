@@ -26,18 +26,16 @@
 **
 ****************************************************************************/
 
+#include <QtQml/QQmlComponent>
 #include <QtQml/qqmlengine.h>
 #include <QtQml/private/qqmlengine_p.h>
 #include <QtQml/private/qqmlmetatype_p.h>
 #include <QtQml/private/qqmlopenmetaobject_p.h>
-#include <QtQuick/private/qquickevents_p_p.h>
-#include <QtQuick/private/qquickpincharea_p.h>
 
 #ifdef QT_WIDGETS_LIB
 #include <QApplication>
 #endif // QT_WIDGETS_LIB
 
-#include <QtGui/QGuiApplication>
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QSet>
@@ -1008,7 +1006,7 @@ int main(int argc, char *argv[])
             : new QGuiApplication(argc, argv));
 #else
     Q_UNUSED(useQApplication);
-    QScopedPointer<QCoreApplication> app(new QGuiApplication(argc, argv));
+    QScopedPointer<QCoreApplication> app(new QCoreApplication(argc, argv));
 #endif // QT_WIDGETS_LIB
 
     QCoreApplication::setApplicationVersion(QLatin1String(QT_VERSION_STR));
@@ -1191,8 +1189,10 @@ int main(int argc, char *argv[])
     QSet<const QMetaObject *> defaultReachable = collectReachableMetaObjects(&engine, uncreatableMetas, singletonMetas, defaultCompositeTypes);
     QList<QQmlType> defaultTypes = QQmlMetaType::qmlTypes();
 
+#ifdef QT_QUICK_LIB
     // add some otherwise unreachable QMetaObjects
     defaultReachable.insert(&QQuickMouseEvent::staticMetaObject);
+#endif
     // QQuickKeyEvent, QQuickPinchEvent, QQuickDropEvent are not exported
     QSet<QByteArray> defaultReachableNames;
 

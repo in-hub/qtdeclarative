@@ -1,15 +1,7 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    builtins \
     qtqml \
-    models \
-    labsmodels
-
-qtConfig(thread): SUBDIRS += folderlistmodel
-qtHaveModule(sql): SUBDIRS += localstorage
-qtConfig(settings): SUBDIRS += settings
-qtConfig(statemachine): SUBDIRS += statemachine
 
 qtHaveModule(quick) {
     QT_FOR_CONFIG += quick-private
